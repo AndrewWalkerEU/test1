@@ -11,7 +11,11 @@
 //**********************************************************************************************
 //-- dodana linia
 //#include <Adafruit_NeoPixel.h>
+
+//-- dodana linia
+//#include <Adafruit_NeoPixel.h>
 #include <Adafruit_NeoPixel.h>
+
 #include <Timers.h>
 
 #define PIXEL_PIN    5    //numer nóżki
