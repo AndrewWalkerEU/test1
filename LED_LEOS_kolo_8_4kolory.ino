@@ -3,19 +3,14 @@
 //*****                                                                                    *****
 //*****  UNOino sterownik LEDów do projektu Leos - koło na ścianę                          *****
 //*****                                                                                    *****
-//*****  UNI-Tral 2018.09.04  białe migające przy tęczy                                    *****
+//*****  UNI-Tral 2018.08.20                                                               *****
 //*****                                                                                    *****
 //*****  DLA: Andrzej Bielsko                                                              *****
 //*****                                                                                    *****
 //**********************************************************************************************
 //**********************************************************************************************
-//-- dodana linia
-//#include <Adafruit_NeoPixel.h>
 
-//-- dodana linia
-//#include <Adafruit_NeoPixel.h>
 #include <Adafruit_NeoPixel.h>
-
 #include <Timers.h>
 
 #define PIXEL_PIN    5    //numer nóżki
@@ -37,7 +32,6 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(WAZ, PIXEL_PIN, NEO_GRB + NEO_KHZ800
 Timer timer1, timerBiale;
 
 //int i;     // na potrzeby pętli
-int podzielnik;
 float j;   // wartość pomocnicza dla jasność
 int jasnosc;
 int przesun2kol;
@@ -148,21 +142,13 @@ void loop()
 
    if (tryb==1)
    {
-      //biale_on();
+      biale_on();
       wyswietl6kol(przesun6kol);
       
       if (przesun6kol<0)
-        przesun6kol++;
+         przesun6kol++;
       else
-        przesun6kol=-6*PIERSCIEN/L_SEKCJI+1;
-
-      podzielnik++;	//obsluga migania podswietlenia kubka
-      if (podzielnik==1)
-        biale_on();
-      if (podzielnik==PIERSCIEN)
-        biale_off();
-      if (podzielnik==2*PIERSCIEN)
-        podzielnik=0; 	
+         przesun6kol=-6*PIERSCIEN/L_SEKCJI+1;
 
       timer1.begin(WAITRAINBOW);
       while (!timer1.available() && !(jestAdres&&jestKolor))
@@ -178,19 +164,19 @@ void loop()
       else
          przesun2kol=-2*PIERSCIEN/L_SEKCJI+1;
 
-      // if (timerBiale.available()) {
+      if (timerBiale.available()) {
          
-         // timerBiale.restart();
+         timerBiale.restart();
          
-         // if (jestBialy) {
-             // biale_off();
-             // jestBialy = false;
-         // }
-         // else {
-             // biale_on();          
-             // jestBialy = true;
-         // }
-      // }
+         if (jestBialy) {
+             biale_off();
+             jestBialy = false;
+         }
+         else {
+             biale_on();          
+             jestBialy = true;
+         }
+      }
       
       timer1.begin(WAIT);
       while (!timer1.available() && !(jestAdres&&jestKolor))
